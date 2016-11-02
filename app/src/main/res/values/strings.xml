@@ -15,6 +15,7 @@
     <string name="menu_acerca_de">Acerca de</string>
     <string name="menu_configurar_cuenta">Configurar Cuenta</string>
     <string name="menu_notificaciones">Recibir Notificaciones</string>
+    <string name="menu_buscar_perfil">Buscar Perfil</string>
 
     <!-- Textos menu-->
     <string name="activity_about_programmer_name">Victor Daniel Cortés Restrepo</string>
@@ -43,8 +44,18 @@
     <string name="activity_contact_error_message">Por favor diligencie todos los datos.</string>
 
     <!-- Textos activity_configuration -->
+    <string name="activity_configuration_tietBuscarAC_text">Escriba el nombre de usuario</string>
+    <string name="activity_configuration_btnBuscarAC_text">Buscar Usuario</string>
+
+    <!-- Textos activity_configuration -->
     <string name="activity_configuration_tietUsetAC_text">Escriba su usuario</string>
-    <string name="activity_configuration_btnSaveUserAC_text">Guardar Usuario</string>
+    <string name="activity_configuration_btnSaveUserAC_text">Aceptar</string>
+
+    <!-- Textos activity_current_configuration -->
+    <string name="activity_current_configuration_tvUserConfigKeyACC_text">Key User</string>
+    <string name="activity_current_configuration_tvUserConfigDispACC_text">Device User</string>
+    <string name="activity_current_configuration_tvUserConfigUserACC_text">Id User</string>
+    <string name="activity_current_configuration_btnNewConftigACC_text">Nueva Configuracion</string>
 
 
 </resources>

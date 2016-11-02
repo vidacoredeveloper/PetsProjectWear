@@ -1,32 +1,38 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="org.coursera.petsproject.fragments.ProfilePetFragment">
 
-    <com.mikhaellopez.circularimageview.CircularImageView
-        android:id="@+id/civProfilePetFPP"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_gravity="center"
-        android:src="@drawable/img_pet_1"/>
-
-    <TextView
-        android:id="@+id/tvNameProfilePetFPP"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textSize="@dimen/layout_card_view_pet_tvNamePetLCVP_text_size"
-        android:text="@string/layout_card_view_pet_tvNamePetLCVP_text"/>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvPhotoProfilePetFPP"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/ltbPetAM"
-        android:background="@color/colorAccent"
-        android:layout_marginTop="@dimen/layout_card_view_pet_margin_top">
-    </android.support.v7.widget.RecyclerView>
+        android:orientation="vertical">
 
-</LinearLayout>
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/civProfilePetFPP"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:src="@drawable/img_pet_1"/>
+
+        <TextView
+            android:id="@+id/tvNameProfilePetFPP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="@dimen/layout_card_view_pet_tvNamePetLCVP_text_size"
+            android:text="@string/layout_card_view_pet_tvNamePetLCVP_text"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvPhotoProfilePetFPP"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/ltbPetAM"
+            android:background="@color/colorAccent"
+            android:layout_marginTop="@dimen/layout_card_view_pet_margin_top">
+        </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

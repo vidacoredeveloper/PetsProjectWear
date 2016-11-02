@@ -54,4 +54,13 @@
     <!-- Dimensiones configuration_activity-->
     <dimen name="configuration_activity_tvUsertittleAC_text_size">50sp</dimen>
 
+    <!-- Dimensiones activity_current_configuration -->
+    <dimen name="activity_current_configuration_tvUserConfigKeyACC_text_size">30sp</dimen>
+    <dimen name="activity_current_configuration_tvLabConfigKeyACC_text_size">20sp</dimen>
+    <dimen name="activity_current_configuration_tvUserConfigKeyACC_margin_top">20dp</dimen>
+
+    <dimen name="activity_current_configuration_tvUserConfigDispACC_text_size">30sp</dimen>
+    <dimen name="activity_current_configuration_tvLabConfigDispACC_text_size">20sp</dimen>
+    <dimen name="activity_current_configuration_tvLabConfigDispACC_margin_top">20dp</dimen>
+
 </resources>

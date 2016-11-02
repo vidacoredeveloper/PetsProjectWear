@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_configuration"
+    android:id="@+id/activity_user_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="org.coursera.petsproject.activities.ConfigurationActivity"
+    tools:context="org.coursera.petsproject.activities.UserProfileActivity"
     android:background="@color/background_card_view">
 
     <include
-        android:id="@+id/ltbUserAC"
+        android:id="@+id/ltbActUserPro"
         layout="@layout/layout_toolbar"/>
 
     <TextView
@@ -22,16 +22,16 @@
         android:textAlignment="center"/>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/tilUserAC"
+        android:id="@+id/tilUserUPA"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/contact_activity_margin_top">
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/tietUsetAC"
+            android:id="@+id/tietUsetUPA"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/activity_configuration_tietBuscarAC_text"/>
+            android:hint="@string/activity_configuration_tietUsetAC_text"/>
 
     </android.support.design.widget.TextInputLayout>
 
@@ -40,9 +40,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/about_activity_text_size"
-        android:text="@string/activity_configuration_btnBuscarAC_text"
-        android:layout_marginTop="@dimen/contact_activity_btnSendContactAC_margin_top"
-        android:onClick="saveUser"
+        android:text="@string/activity_configuration_btnSaveUserAC_text"
+        android:onClick="guardarUsuario"
+        android:layout_alignParentBottom="true"
         android:theme="@style/BtnSend"/>
 
 </LinearLayout>

@@ -16,4 +16,6 @@ public class KeysJson {
     public static final String MEDIA_URL            = "url";
     public static final String PET_LIKES            = "likes";
     public static final String PET_LIKES_COUNT      = "count";
+    public static final String LIKE_META            = "meta";
+    public static final String LIKE_CODE            = "code";
 }

@@ -1,6 +1,9 @@
 package org.coursera.petsproject.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -10,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -19,6 +23,7 @@ import org.coursera.petsproject.adapters.ViewPagerAdapter;
 import org.coursera.petsproject.database.Interactor;
 import org.coursera.petsproject.firebase.adapters.AdapterDataUser;
 import org.coursera.petsproject.firebase.interfaces.EndPoint;
+import org.coursera.petsproject.firebase.model.PetConfiguration;
 import org.coursera.petsproject.firebase.model.ResponseUser;
 import org.coursera.petsproject.fragments.PetFragment;
 import org.coursera.petsproject.fragments.ProfilePetFragment;
@@ -38,9 +43,12 @@ public class MainActivity extends AppCompatActivity implements IMainActivity{
     public static ArrayList<Pet> petsList;
     public static Interactor interactor;
     public static PetGram petGram;
+    public static PetGram user;
+    private PetConfiguration petConfiguration;
     private Toolbar toolbar;
     private TabLayout tabBarAM;
     private ViewPager vpPetAM;
+    private SharedPreferences usuarioConfigurado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,18 +62,54 @@ public class MainActivity extends AppCompatActivity implements IMainActivity{
      * Método que permite inicializar los componentes correspondientes a la actividad.
      */
     public void initializeComponents () {
+        usuarioConfigurado = getSharedPreferences("DatosUsuario", Context.MODE_PRIVATE);
         petGram = new PetGram();
-        getParametersPet(petGram);
+        user = new PetGram();
+        petConfiguration = new PetConfiguration();
+        getParametersPetagram(petGram);
+        getParametersUser(user);
+        getPetConfiguration(petConfiguration);
         interactor = new Interactor(getBaseContext());
         establishToolbar();
         setUPViewPager();
     }
 
-    public void getParametersPet(PetGram pet){
-        if(getIntent().getExtras() != null){
-            pet.setIdPet(getIntent().getExtras().getString("id"));
-            pet.setNamePet(getIntent().getExtras().getString("name"));
-            pet.setURLPhotoPet(getIntent().getExtras().getString("photo"));
+    @Override
+    public void getParametersPetagram(PetGram pet){
+        if(getIntent().getExtras() != null && getIntent().getExtras().getString("num").equals("2")){
+            String idPet = getIntent().getExtras().getString("id");
+            String namePet = getIntent().getExtras().getString("name");
+            String photoPet = getIntent().getExtras().getString("photo");
+            if((!idPet.isEmpty()) && (!namePet.isEmpty()) && (!photoPet.isEmpty())) {
+                pet.setIdPet(idPet);
+                pet.setNamePet(namePet);
+                pet.setURLPhotoPet(photoPet);
+            }
+        }
+    }
+
+    @Override
+    public void getParametersUser(PetGram pet){
+        if(getIntent().getExtras() != null && getIntent().getExtras().getString("num").equals("1")){
+            String idPet = getIntent().getExtras().getString("id_u");
+            String namePet = getIntent().getExtras().getString("name_u");
+            String photoPet = getIntent().getExtras().getString("photo_u");
+
+            if((!idPet.isEmpty()) && (!namePet.isEmpty()) && (!photoPet.isEmpty())) {
+                pet.setIdPet(idPet);
+                pet.setNamePet(namePet);
+                pet.setURLPhotoPet(photoPet);
+            }
+        }
+    }
+
+    @Override
+    public void getPetConfiguration(PetConfiguration pet) {
+        if(usuarioConfigurado.contains("key")) {
+            String k = usuarioConfigurado.getString("key", "no existe la variable");
+            String d = usuarioConfigurado.getString("dispositivo", "no existe la variable");
+            pet.setKeyPet(k);
+            pet.setDevicePet(d);
         }
     }
 
@@ -152,6 +196,12 @@ public class MainActivity extends AppCompatActivity implements IMainActivity{
 
                 break;
 
+            case R.id.mBuscarPerfil:
+
+                goBuscarPerfil();
+
+                break;
+
             case R.id.mRecibirNotificaciones:
 
                 recibirNotificaciones();
@@ -194,6 +244,25 @@ public class MainActivity extends AppCompatActivity implements IMainActivity{
      */
     @Override
     public void goConfiguration() {
+        if(usuarioConfigurado.contains("key")) {
+            Intent intent = new Intent(this, CurrentConfigurationActivity.class);
+            intent.putExtra("key_u", petConfiguration.getKeyPet());
+            intent.putExtra("dis_u", petConfiguration.getDevicePet());
+            startActivity(intent);
+            finish();
+        }
+        else {
+            Intent intent = new Intent(this, UserProfileActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
+
+    /**
+     * Método que nos permite ingresar a la vista para buscar un nuevo perfil.
+     */
+    @Override
+    public void goBuscarPerfil() {
         Intent intent = new Intent(this, ConfigurationActivity.class);
         startActivity(intent);
         finish();
@@ -204,24 +273,41 @@ public class MainActivity extends AppCompatActivity implements IMainActivity{
      */
     @Override
     public void recibirNotificaciones() {
-        String token = FirebaseInstanceId.getInstance().getToken();
-        String user = petGram.getNamePet();
-        AdapterDataUser adapterDataUser = new AdapterDataUser();
-        EndPoint endPoint = adapterDataUser.establecerConexionRest();
-        final Call<ResponseUser> responseUserCall = endPoint.registrarUsuario(token, user);
-        responseUserCall.enqueue(new Callback<ResponseUser>() {
-            @Override
-            public void onResponse(Call<ResponseUser> call, Response<ResponseUser> response) {
-                ResponseUser responseUser = response.body();
-                Log.d("REGISTRAR_USUARIO_ID", responseUser.getId() + "");
-                Log.d("REGISTRAR_USUARIO_DISPO", responseUser.getIdDispositivo() + "");
-                Log.d("REGISTRAR_USUARIO_USER", responseUser.getIdUsuarioInstagram() + "");
-            }
+        if(!user.getIdPet().isEmpty() || user != null) {
+            String token = FirebaseInstanceId.getInstance().getToken();
+            String userNot = user.getIdPet();
+            AdapterDataUser adapterDataUser = new AdapterDataUser();
+            EndPoint endPoint = adapterDataUser.establecerConexionRest();
+            final Call<ResponseUser> responseUserCall = endPoint.registrarUsuario(token, userNot);
+            responseUserCall.enqueue(new Callback<ResponseUser>() {
+                @Override
+                public void onResponse(Call<ResponseUser> call, Response<ResponseUser> response) {
+                    ResponseUser responseUser = response.body();
+                    crearSharedPreferences(responseUser.getId() + "", responseUser.getIdDispositivo()
+                            + "");
+                }
 
-            @Override
-            public void onFailure(Call<ResponseUser> call, Throwable t) {
+                @Override
+                public void onFailure(Call<ResponseUser> call, Throwable t) {
+                    Snackbar.make(null, "No hay un usuario configurado.", Snackbar.LENGTH_SHORT)
+                            .show();
+                }
+            });
+        }
+        else {
+            Snackbar.make(null, "Configura primero tu cuenta de usuario.", Snackbar.LENGTH_SHORT)
+                    .show();
+        }
+    }
 
-            }
-        });
+    @Override
+    public void crearSharedPreferences(String key, String dispositivo) {
+
+        SharedPreferences.Editor editor = usuarioConfigurado.edit();
+
+        editor.putString("key", key);
+        editor.putString("dispositivo", dispositivo);
+
+        editor.commit();
     }
 }

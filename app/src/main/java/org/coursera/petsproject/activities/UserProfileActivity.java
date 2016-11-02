@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import org.coursera.petsproject.R;
-import org.coursera.petsproject.activities.Interfaces.IConfigurationActivity;
+import org.coursera.petsproject.activities.Interfaces.IUserProfileActivity;
 import org.coursera.petsproject.rest.adapter.ResponseAdapter;
 import org.coursera.petsproject.rest.interfaces.IEndPoint;
 import org.coursera.petsproject.rest.model.PetUserResponse;
@@ -22,9 +22,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ConfigurationActivity extends AppCompatActivity implements IConfigurationActivity{
+public class UserProfileActivity extends AppCompatActivity implements IUserProfileActivity {
 
-    private EditText tietUsetAC;
+    private EditText tietUsetUPA;
+
     private String id;
     private String name;
     private String photo;
@@ -32,44 +33,24 @@ public class ConfigurationActivity extends AppCompatActivity implements IConfigu
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_configuration);
-
-
+        setContentView(R.layout.activity_user_profile);
 
         initializeComponents();
     }
 
-    /**
-     * Método que permite inicializar los componentes correspondientes a la actividad.
-     */
-    public void initializeComponents () {
-        establishToolbar();
-        id="";
-        name="";
-        photo="";
-        tietUsetAC = (EditText) findViewById(R.id.tietUsetAC);
-    }
-
-    /**
-     * Método que asigna la barra de herramientas a la vista.
-     */
-    public void establishToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.ltbUserAC);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+    private void initializeComponents(){
+        tietUsetUPA = (EditText) findViewById(R.id.tietUsetUPA);
+        id = "";
+        name = "";
+        photo = "";
     }
 
     @Override
-    public void saveUser(View view) {
-        getPetUser();
-    }
-
-    @Override
-    public void getPetUser() {
+    public void guardarUsuario(View view) {
         ResponseAdapter responseAdapter = new ResponseAdapter();
         Gson gson = responseAdapter.buildsGSonDeserializeUser();
         IEndPoint iEndPoint = responseAdapter.instagramEstablishConnection(gson);
-        Call<PetUserResponse> petResponseCall = iEndPoint.getPetUSer(tietUsetAC.getText().toString());
+        Call<PetUserResponse> petResponseCall = iEndPoint.getPetUSer(tietUsetUPA.getText().toString());
 
         petResponseCall.enqueue(new Callback<PetUserResponse>() {
             @Override
@@ -90,6 +71,18 @@ public class ConfigurationActivity extends AppCompatActivity implements IConfigu
         });
     }
 
+    private void goMainActivity(){
+        Intent intent = new Intent(this, MainActivity.class);
+        if( (!id.isEmpty()) && (!name.isEmpty()) && (!photo.isEmpty()) ) {
+            intent.putExtra("num", "1");
+            intent.putExtra("id_u", id);
+            intent.putExtra("name_u", name);
+            intent.putExtra("photo_u", photo);
+        }
+        startActivity(intent);
+        finish();
+    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -98,15 +91,11 @@ public class ConfigurationActivity extends AppCompatActivity implements IConfigu
         return super.onKeyDown(keyCode, event);
     }
 
-    private void goMainActivity(){
-        Intent intent = new Intent(this, MainActivity.class);
-        if( (!id.isEmpty()) && (!name.isEmpty()) && (!photo.isEmpty()) ){
-            intent.putExtra("num", "2");
-            intent.putExtra("id", id);
-            intent.putExtra("name", name);
-            intent.putExtra("photo", photo);
-        }
-        startActivity(intent);
-        finish();
+    public void mostar(String uno, String dos, String tres) {
+        Toast.makeText(getBaseContext(),
+                "ID : " + uno + "\n" +
+                "NAME : " + dos + "\n" +
+                "PHOTO : " + tres,
+                Toast.LENGTH_LONG).show();
     }
 }

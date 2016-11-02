@@ -17,14 +17,19 @@
         android:orderInCategory="102"></item>
 
     <item
+        android:id="@+id/mBuscarPerfil"
+        android:title="@string/menu_buscar_perfil"
+        android:orderInCategory="103"></item>
+
+    <item
         android:id="@+id/mRecibirNotificaciones"
         android:title="@string/menu_notificaciones"
-        android:orderInCategory="103"></item>
+        android:orderInCategory="104"></item>
 
     <item
         android:id="@+id/mFavorites"
         android:title="Favorites"
-        android:orderInCategory="104"
+        android:orderInCategory="105"
         app:showAsAction="always"
         android:icon="@drawable/ico_estrellacinco"/>
 </menu>

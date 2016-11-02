@@ -16,6 +16,14 @@ public final class Constant {
     public static final String KEY_ACCESS_TOKEN_USER = "&access_token=" + ACCESS_TOKEN;
     public static final String KEY_ACCESS_TOKEN_MEDIA = "?access_token=" + ACCESS_TOKEN;
 
+
+    //curl -F 'access_token=ACCESS-TOKEN' \
+    //https://api.instagram.com/v1/media/{media-id}/likes
+    public static final String KEY_UPDATE_LIKE = "curl -F 'access_token=" + ACCESS_TOKEN + "' ";
+    public static final String KEY_UPDATE = KEY_UPDATE_LIKE + ROOT_URL;
+
+
     public static final String FIND_USER = ROOT_URL + KEY_GET_INFORMATION_USER + KEY_ACCESS_TOKEN_USER;
     public static final String FIND_MEDIA_USER = ROOT_URL + KEY_GET_MEDIA_USER + KEY_ACCESS_TOKEN_MEDIA;
+    public static final String KEY_UPDATE_MEDIA_LIKE = KEY_UPDATE + "media/{media-id}/likes";
 }

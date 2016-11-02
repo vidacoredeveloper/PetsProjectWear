@@ -7,4 +7,6 @@ package org.coursera.petsproject.firebase;
 public final class Constant {
     public static final String ROOT_URL = "https://glacial-ridge-27951.herokuapp.com/";
     public static final String KEY_POST_ID_TOKEN = "registrar-usuario/";
+    public static final String KEY_POST_REGISTRAR_LIKE = "registrar-like/";
+    public static final String KEY_GET_NOTIFICACION = "/like-foto/{id_usuario_instagram}/";
 }
