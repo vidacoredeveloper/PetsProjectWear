@@ -53,9 +53,15 @@
 
     <!-- Textos activity_current_configuration -->
     <string name="activity_current_configuration_tvUserConfigKeyACC_text">Key User</string>
+    <string name="activity_current_configuration_tvUserConfigNameACC_text">Name User</string>
     <string name="activity_current_configuration_tvUserConfigDispACC_text">Device User</string>
     <string name="activity_current_configuration_tvUserConfigUserACC_text">Id User</string>
     <string name="activity_current_configuration_btnNewConftigACC_text">Nueva Configuracion</string>
+
+    <!-- Wear -->
+    <string name="texto_notificacion">Like Pet!!!</string>
+    <string name="texto_perfil_like">Who Likes </string>
+    <string name="texto_seguir">Follow Pet</string>
 
 
 </resources>

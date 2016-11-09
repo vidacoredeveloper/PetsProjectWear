@@ -35,6 +35,25 @@
             />
 
         <TextView
+            android:id="@+id/tvUserConfigNameACC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/activity_current_configuration_tvUserConfigNameACC_text"
+            android:textSize="@dimen/activity_current_configuration_tvUserConfigDispACC_text_size"
+            android:layout_marginTop="@dimen/activity_current_configuration_tvUserConfigDispACC_text_size"
+            android:textStyle="bold"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/tvLabConfigNameACC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/activity_current_configuration_tvUserConfigKeyACC_text"
+            android:textSize="@dimen/activity_current_configuration_tvLabConfigDispACC_text_size"
+            android:textAlignment="center"
+            />
+
+        <TextView
             android:id="@+id/tvUserConfigDispACC"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

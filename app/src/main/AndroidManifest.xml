@@ -93,6 +93,11 @@
             </intent-filter>
         </service>
 
+        <receiver android:name=".firebase.model.RegistrarSeguir">
+            <intent-filter>
+                <action android:name="FOLLOW"/>
+            </intent-filter>
+        </receiver>
 
     </application>
 

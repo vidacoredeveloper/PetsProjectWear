@@ -83,7 +83,7 @@ public class PhotoPetAdapter extends RecyclerView.Adapter<PhotoPetAdapter.PhotoP
             @Override
             public void onClick(View view) {
 
-                String token = FirebaseInstanceId.getInstance().getToken();
+                String token = MainActivity.user.getIdPet();
                 String user = pet.getIdPet();
                 String foto = pet.getURLPhotoPet();
                 AdapterDataUser adapterDataUser = new AdapterDataUser();
@@ -99,7 +99,8 @@ public class PhotoPetAdapter extends RecyclerView.Adapter<PhotoPetAdapter.PhotoP
 
                     @Override
                     public void onFailure(Call<ResponseLikeUser> call, Throwable t) {
-
+                        Snackbar.make(null, pet.getNamePet() + " es mascota favoria.", Snackbar.LENGTH_SHORT)
+                                .show();
                     }
                 });
 
@@ -144,13 +145,11 @@ public class PhotoPetAdapter extends RecyclerView.Adapter<PhotoPetAdapter.PhotoP
     public void enviarNotificacion(ResponseLikeUser responseUser) {
         AdapterDataUser adapterDataUser = new AdapterDataUser();
         EndPoint endPoint = adapterDataUser.establecerConexionRest();
-        Call<ResponseNotificacion> usuarioResponseCall = endPoint.notificacionLike(responseUser.getIdUsuarioInstagram());
+        Call<ResponseNotificacion> usuarioResponseCall = endPoint.notificacionLike(responseUser.getId_usuario_instagram());
         usuarioResponseCall.enqueue(new Callback<ResponseNotificacion>() {
             @Override
             public void onResponse(Call<ResponseNotificacion> call, Response<ResponseNotificacion> response) {
                 ResponseNotificacion responseNotificacion = response.body();
-                Log.d("NOT_USER", responseNotificacion.getId_usuario_instagram());
-                Log.d("NOT_DESP", responseNotificacion.getId_dispositivo());
             }
 
             @Override

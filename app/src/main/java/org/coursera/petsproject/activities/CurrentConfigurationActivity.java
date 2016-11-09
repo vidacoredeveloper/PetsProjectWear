@@ -13,7 +13,7 @@ import org.coursera.petsproject.activities.Interfaces.ICurrentConfigurationActiv
 
 public class CurrentConfigurationActivity extends AppCompatActivity implements ICurrentConfigurationActivity{
 
-    private TextView tvLabConfigKeyACC, tvLabConfigDispACC;
+    private TextView tvLabConfigKeyACC, tvLabConfigDispACC, tvLabConfigNameACC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +26,7 @@ public class CurrentConfigurationActivity extends AppCompatActivity implements I
     private void initializeComponents(){
         tvLabConfigKeyACC = (TextView) findViewById(R.id.tvLabConfigKeyACC);
         tvLabConfigDispACC = (TextView) findViewById(R.id.tvLabConfigDispACC);
+        tvLabConfigNameACC = (TextView) findViewById(R.id.tvLabConfigNameACC);
 
         getData();
     }
@@ -42,6 +43,7 @@ public class CurrentConfigurationActivity extends AppCompatActivity implements I
         if(getIntent().getExtras() != null){
             tvLabConfigKeyACC.setText(getIntent().getExtras().getString("key_u"));
             tvLabConfigDispACC.setText(getIntent().getExtras().getString("dis_u"));
+            tvLabConfigNameACC.setText(getIntent().getExtras().getString("nam_u"));
         }
     }
 

@@ -3,6 +3,7 @@ package org.coursera.petsproject.firebase.interfaces;
 import org.coursera.petsproject.firebase.Constant;
 import org.coursera.petsproject.firebase.model.ResponseLikeUser;
 import org.coursera.petsproject.firebase.model.ResponseNotificacion;
+import org.coursera.petsproject.firebase.model.ResponseSeguir;
 import org.coursera.petsproject.firebase.model.ResponseUser;
 
 import retrofit2.Call;
@@ -24,8 +25,15 @@ public interface EndPoint {
 
     @FormUrlEncoded
     @POST(Constant.KEY_POST_REGISTRAR_LIKE)
-    public Call<ResponseLikeUser> registrarLike(@Field("id_dispositivo") String token, @Field("id_usuario_instagram") String user, @Field("id_foto_instagram") String foto);
+    public Call<ResponseLikeUser> registrarLike(@Field("id_usuario_local") String token, @Field("id_usuario_instagram") String user, @Field("id_foto_instagram") String foto);
 
     @GET(Constant.KEY_GET_NOTIFICACION)
     public Call<ResponseNotificacion> notificacionLike(@Path("id_usuario_instagram") String usuario);
+
+    @GET(Constant.KEY_GET_LIKE)
+    public Call<ResponseLikeUser> getUserLike(@Path("id_usuario_instagram") String usuario);
+
+    @FormUrlEncoded
+    @POST(Constant.KEY_POST_REG_SEGUIR)
+    public Call<ResponseSeguir> registrarSeguir(@Field("key") String key, @Field("valor") String valor);
 }

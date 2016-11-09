@@ -48,7 +48,8 @@ public class MainActivity extends AppCompatActivity implements IMainActivity{
     private Toolbar toolbar;
     private TabLayout tabBarAM;
     private ViewPager vpPetAM;
-    private SharedPreferences usuarioConfigurado;
+    public static SharedPreferences usuarioConfigurado;
+    private String profileUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,13 +63,16 @@ public class MainActivity extends AppCompatActivity implements IMainActivity{
      * Método que permite inicializar los componentes correspondientes a la actividad.
      */
     public void initializeComponents () {
+        profileUser = "";
         usuarioConfigurado = getSharedPreferences("DatosUsuario", Context.MODE_PRIVATE);
         petGram = new PetGram();
         user = new PetGram();
         petConfiguration = new PetConfiguration();
-        getParametersPetagram(petGram);
-        getParametersUser(user);
+
         getPetConfiguration(petConfiguration);
+        getParametersUser(user);
+        getParametersPetagram(petGram);
+
         interactor = new Interactor(getBaseContext());
         establishToolbar();
         setUPViewPager();
@@ -90,15 +94,18 @@ public class MainActivity extends AppCompatActivity implements IMainActivity{
 
     @Override
     public void getParametersUser(PetGram pet){
-        if(getIntent().getExtras() != null && getIntent().getExtras().getString("num").equals("1")){
-            String idPet = getIntent().getExtras().getString("id_u");
-            String namePet = getIntent().getExtras().getString("name_u");
-            String photoPet = getIntent().getExtras().getString("photo_u");
+        if(getIntent().getExtras() != null){
+            if(getIntent().getExtras().getString("num").equals("1")){
+                String idPet = getIntent().getExtras().getString("id_u");
+                String namePet = getIntent().getExtras().getString("name_u");
+                String photoPet = getIntent().getExtras().getString("photo_u");
 
-            if((!idPet.isEmpty()) && (!namePet.isEmpty()) && (!photoPet.isEmpty())) {
-                pet.setIdPet(idPet);
-                pet.setNamePet(namePet);
-                pet.setURLPhotoPet(photoPet);
+                if((!idPet.isEmpty()) && (!namePet.isEmpty()) && (!photoPet.isEmpty())) {
+                    pet.setIdPet(idPet);
+                    pet.setNamePet(namePet);
+                    pet.setURLPhotoPet(photoPet);
+                    profileUser =  getIntent().getExtras().getString("bus_u");
+                }
             }
         }
     }
@@ -110,6 +117,16 @@ public class MainActivity extends AppCompatActivity implements IMainActivity{
             String d = usuarioConfigurado.getString("dispositivo", "no existe la variable");
             pet.setKeyPet(k);
             pet.setDevicePet(d);
+
+            String idPet = usuarioConfigurado.getString("idPet", "no existe la variable");
+            String namePet = usuarioConfigurado.getString("namePet", "no existe la variable");
+            String photoPet = usuarioConfigurado.getString("photoPet", "no existe la variable");
+
+            profileUser = usuarioConfigurado.getString("profile", "no existe la variable");
+
+            user.setIdPet(idPet);
+            user.setNamePet(namePet);
+            user.setURLPhotoPet(photoPet);
         }
     }
 
@@ -248,6 +265,7 @@ public class MainActivity extends AppCompatActivity implements IMainActivity{
             Intent intent = new Intent(this, CurrentConfigurationActivity.class);
             intent.putExtra("key_u", petConfiguration.getKeyPet());
             intent.putExtra("dis_u", petConfiguration.getDevicePet());
+            intent.putExtra("nam_u", user.getNamePet());
             startActivity(intent);
             finish();
         }
@@ -307,6 +325,10 @@ public class MainActivity extends AppCompatActivity implements IMainActivity{
 
         editor.putString("key", key);
         editor.putString("dispositivo", dispositivo);
+        editor.putString("idPet", user.getIdPet());
+        editor.putString("namePet", user.getNamePet());
+        editor.putString("photoPet", user.getURLPhotoPet());
+        editor.putString("profile", profileUser);
 
         editor.commit();
     }

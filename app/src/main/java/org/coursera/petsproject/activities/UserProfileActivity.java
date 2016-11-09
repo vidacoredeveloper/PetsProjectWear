@@ -78,6 +78,7 @@ public class UserProfileActivity extends AppCompatActivity implements IUserProfi
             intent.putExtra("id_u", id);
             intent.putExtra("name_u", name);
             intent.putExtra("photo_u", photo);
+            intent.putExtra("bus_u", tietUsetUPA.getText().toString());
         }
         startActivity(intent);
         finish();
@@ -89,13 +90,5 @@ public class UserProfileActivity extends AppCompatActivity implements IUserProfi
             goMainActivity();
         }
         return super.onKeyDown(keyCode, event);
-    }
-
-    public void mostar(String uno, String dos, String tres) {
-        Toast.makeText(getBaseContext(),
-                "ID : " + uno + "\n" +
-                "NAME : " + dos + "\n" +
-                "PHOTO : " + tres,
-                Toast.LENGTH_LONG).show();
     }
 }
